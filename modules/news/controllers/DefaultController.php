@@ -8,6 +8,7 @@ use app\models\ArticleSearh;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\Pagination;
 
 /**
  * DefaultController implements the CRUD actions for Article model.
@@ -37,6 +38,10 @@ class DefaultController extends Controller
     {
         $searchModel = new ArticleSearh();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        //$query = Article::find();
+        //$count = $query->count();
+        //$pagination = new Pagination(['totalCount' => $count]);
+        //var_dump($pagination);exit;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
