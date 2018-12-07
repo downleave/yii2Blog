@@ -41,7 +41,7 @@ class DefaultController extends Controller
         //$query = Article::find();
         //$count = $query->count();
         //$pagination = new Pagination(['totalCount' => $count]);
-        //var_dump($pagination);exit;
+        //var_dump($pagination);exit;111
 
         return $this->render('index', [
             'searchModel' => $searchModel,
