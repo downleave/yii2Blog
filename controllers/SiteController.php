@@ -303,4 +303,38 @@ class SiteController extends Controller
         $PHPWord->saveAs($tmpFile);
         echo 'success';
     }
+
+    public function actionTestlala3()
+    {
+        //$writers = array('Word2007' => 'docx', 'ODText' => 'odt', 'RTF' => 'rtf', 'HTML' => 'html', 'PDF' => 'pdf');
+        $path = 'D:\\test\\';
+        $source = $path.'testwatermark.docx';
+        $phpWord = \PhpOffice\PhpWord\IOFactory::load($source);
+        foreach($phpWord->getSections() as $section){
+            $header = $section->addHeader();
+            $header->addWatermark($path.'testwatermark.jpg', array('marginTop' => 0, 'marginLeft' => 0));
+        }
+        //echo write($phpWord, basename(__FILE__, '.php'), $writers);
+        //var_dump($phpWord);exit;
+        $phpWord->save($path.'testwatermark-'.time().'.docx', 'Word2007');
+        echo 'success';
+    }
+
+    // function write($phpWord, $filename, $writers)
+    // {
+    //     $result = '';
+    //     // Write documents
+    //     foreach ($writers as $format => $extension) {
+    //         $result .= date('H:i:s') . " Write to {$format} format";
+    //         if (null !== $extension) {
+    //             $targetFile = __DIR__ . "/results/{$filename}.{$extension}";
+    //             $phpWord->save($targetFile, $format);
+    //         } else {
+    //             $result .= ' ... NOT DONE!';
+    //         }
+    //         $result .= EOL;
+    //     }
+    //     $result .= getEndingNotes($writers, $filename);
+    //     return $result;
+    // }
 }
