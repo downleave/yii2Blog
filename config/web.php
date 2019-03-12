@@ -47,6 +47,24 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                //'wopi/files/<name:\w+.\w+>' => 'news/default/get-file-info',
+                //'wopi/files/<name:\d+>/contens>' => 'news/default/get-file',
+                //'wopi' => 'news/default/lala', 
+                //'post/<id:\d+>' => 'post/view',
+                //[
+                    //'news' => 'news/default/index', 
+                    //'post/<id:\d+>' => 'post/view',
+                //]
+                [
+                    'pattern' => 'wopihost/wopi/files/<name:\w+.\w+>',
+                    'route' => 'news/default/get-file-info',
+                    'defaults' => ['name' => ''],
+                ],
+                [
+                    'pattern' => 'wopihost/wopi/files/<name:\w+.\w+>/contents',
+                    'route' => 'news/default/get-file',
+                    'defaults' => ['name' => ''],
+                ],
             ],
         ],
     ],
@@ -71,6 +89,7 @@ if (YII_ENV_DEV) {
     $config['modules']['news'] = [
         'class' => 'app\modules\news\Module',
     ];
+    //$config['wopi'] = [];
 }
 
 return $config;

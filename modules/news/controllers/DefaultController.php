@@ -129,4 +129,69 @@ class DefaultController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionGetFileInfo($name)
+    {
+        $path = __DIR__."\office\\$name";
+        if (file_exists($path)) {
+            $handle = fopen($path, "r");
+            $size = filesize($path);
+            $contents = fread($handle, $size);
+            $SHA256 = base64_encode(hash('sha256', $contents, true));
+            $json = array(
+                'BaseFileName' => $name,
+                'OwnerId' => 'admin',
+                'Size' => $size,
+                'SHA256' => $SHA256,
+                'Version' => '222888822',
+                "AllowExternalMarketplace"=>true,
+                "UserCanWrite"=>true,
+                "SupportsUpdate"=>true,
+                "SupportsLocks"=>true
+            );
+            header('Content-Type: application/json');
+            echo json_encode($json);
+        } else {
+            echo json_encode(array());
+        }
+    }
+
+    public function actionGetFile($name) {
+        if(Yii::$app->request->isPost){
+            $this->actionPutfile($name);
+        }else{
+            $path = __DIR__."\office\\$name";
+            if (file_exists($path)) {
+                header('Content-Description: File Transfer');
+                header('Content-Type: application/octet-stream');
+                header('Content-Disposition: attachment; filename=' . basename($path));
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate');
+                header('Pragma: public');
+                header('Content-Length: ' . filesize($path));
+                readfile($path);
+                exit;
+            }
+        }
+        
+    }
+
+    public function actionPutfile($name)
+    {
+        $path = __DIR__."\office\\$name";
+        $contents = file_get_contents('php://input');
+        if (file_exists($path)) {
+            file_put_contents($path, $contents);
+        }
+        echo $contents;
+    }
+
+    public function actionTest123()
+    {
+        echo urlencode('http://192.168.110.1:8002/wopihost/wopi/files/test.docx');
+    }
+
+    public function init(){
+        $this->enableCsrfValidation = false;
+    }
 }

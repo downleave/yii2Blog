@@ -267,15 +267,14 @@ class SiteController extends Controller
     public function actionTestlala()
     {
         $path = 'D:\\test\\';
-        $source = $path.'4.docx';
+        $source = $path.'3_1.docx';
         $phpWord = \PhpOffice\PhpWord\IOFactory::load($source,'Word2007');
-
-        $htmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord,'Word2007');
+        $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, "HTML");
         //声明临时html文件
-        $tmpFile = $path.'4-2.docx';
+        $tmpFile = $path.'3_1-'.time().'.html';
 
         // //将$xmlWriter的值写入临时html文件
-        $ret = $htmlWriter->save($tmpFile);
+        $ret = $xmlWriter->save($tmpFile);
 
         //$htmlOBJ = \PhpOffice\PhpWord\IOFactory::load($tmpFile,'HTML');
         //$docxWriter = \PhpOffice\PhpWord\IOFactory::createWriter($htmlOBJ,'Word2007');
@@ -298,7 +297,7 @@ class SiteController extends Controller
         $PHPWord->setValue('price','1000');
         $PHPWord->setValue('price2','10000');
         $PHPWord->setValue('pricechina','壹万整');
-        $tmpFile = $path.'4-2-1-2.docx';
+        $tmpFile = $path.'4-2-1-'.time().'.docx';
 
         $PHPWord->saveAs($tmpFile);
         echo 'success';
