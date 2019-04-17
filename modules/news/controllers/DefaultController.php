@@ -194,4 +194,42 @@ class DefaultController extends Controller
     public function init(){
         $this->enableCsrfValidation = false;
     }
+
+    public function actionHtmlToDocx()
+    {
+        $htmlPath = "D:\\testcsharp\\testfile\\123.html";
+        $time = time();
+        $docPath = "D:\\testcsharp\\testfile\\123-{$time}.docx";
+        $cmd = <<<EOF
+\$htmlPath = '$htmlPath';
+\$docPath = '$docPath';
+\$wordApp = New-Object -ComObject Word.Application;
+\$document = \$wordApp.Documents.Open(\$htmlPath,\$false);
+\$document.SaveAs([ref] \$docPath, [ref] 16);
+\$document.Close();
+\$wordApp.Quit();
+EOF;
+        $cmd = implode("", explode("\n", $cmd));
+        $f=shell_exec('powershell ' . $cmd);
+        var_dump($f);
+    }
+
+    public function actionDocxToHtml()
+    {
+        $docPath = "D:\\testcsharp\\testfile\\123.docx";
+        $time = time();
+        $htmlPath = "D:\\testcsharp\\testfile\\123-{$time}.html";
+        $cmd = <<<EOF
+            \$docPath = '$docPath';
+            \$htmlPath = '$htmlPath';
+            \$wordApp = New-Object -ComObject Word.Application;
+            \$document = \$wordApp.Documents.Open(\$docPath);
+            \$document.SaveAs([ref] \$htmlPath, [ref] 10);
+            \$document.Close();
+            \$wordApp.Quit();
+EOF;
+        $cmd = implode("", explode("\n", $cmd));
+        $f=shell_exec('powershell ' . $cmd);
+        var_dump($f);
+    }
 }
