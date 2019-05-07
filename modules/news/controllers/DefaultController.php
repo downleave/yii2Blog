@@ -333,11 +333,12 @@ EOF;
 
             $spreadsheet->getActiveSheet()->setCellValue(chr($k) . $taxTableBaseRow, $date == 'total' ? '合计' : $date)
                 ->setCellValue(chr($k) . ($taxTableBaseRow + 1), $value['before'])
-                ->setCellValue(chr($k) . ($taxTableBaseRow + 2), $value['after']);
+                ->setCellValue(chr($k) . ($taxTableBaseRow + 2), $value['after'])
+                ->setCellValue(chr($k) . ($taxTableBaseRow + 3), $value['before'] - $value['after']);
             $k++;
         }
-        $tableEnd = chr($k - 1) . ($taxTableBaseRow + 2);
-        
+        $tableEnd = chr($k - 1) . ($taxTableBaseRow + 3);
+
         //格式化好税率表
         $spreadsheet->getActiveSheet()->getStyle($tableStart.':'.$tableEnd)->applyFromArray(
             [
