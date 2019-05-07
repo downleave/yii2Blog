@@ -47,14 +47,6 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                //'wopi/files/<name:\w+.\w+>' => 'news/default/get-file-info',
-                //'wopi/files/<name:\d+>/contens>' => 'news/default/get-file',
-                //'wopi' => 'news/default/lala', 
-                //'post/<id:\d+>' => 'post/view',
-                //[
-                    //'news' => 'news/default/index', 
-                    //'post/<id:\d+>' => 'post/view',
-                //]
                 [
                     'pattern' => 'wopihost/wopi/files/<name:\w+.\w+>',
                     'route' => 'news/default/get-file-info',
